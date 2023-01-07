@@ -1,0 +1,60 @@
+#include <iostream>
+
+
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode(int x) : val(x), next(nullptr) {}
+};
+
+class Stack {
+ public:
+  Stack() : head_(nullptr) {}
+
+  void push(int x) {
+    ListNode* new_node = new ListNode(x);
+    new_node->next = head_;
+    head_ = new_node;
+  }
+
+
+  int pop() {
+    if (head_ == nullptr) {
+      throw std::out_of_range("Stack is empty.");
+    }
+    ListNode* temp = head_;
+    head_ = head_->next;
+    int top = temp->val;
+    delete temp;
+    return top;
+  }
+
+  
+  int top() {
+    if (head_ == nullptr) {
+      throw std::out_of_range("Stack is empty.");
+    }
+    return head_->val;
+  }
+
+  
+  bool empty() { return head_ == nullptr; }
+
+ private:
+  ListNode* head_;
+};
+
+int main() {
+  Stack stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+  std::cout << stack.top() << std::endl;  // Outputs 3
+  std::cout << stack.pop() << std::endl;  // Outputs 3
+  std::cout << stack.top() << std::endl;  // Outputs 2
+  std::cout << stack.empty() << std::endl;  // Outputs false
+  std::cout << stack.pop() << std::endl;  // Outputs 2
+  std::cout << stack.pop() << std::endl;  // Outputs 1
+  std::cout << stack.empty() << std::endl;  // Outputs true
+  return 0;
+}
